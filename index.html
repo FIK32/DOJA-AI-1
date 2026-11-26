@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101116">
+  <title>DOJA AI — Your creative workspace</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="/" aria-label="DOJA AI home">
+        <span class="brand-mark">D</span>
+        <span>DOJA <strong>AI</strong></span>
+      </a>
+
+      <button class="new-chat-button" id="newChatButton" type="button">
+        <span aria-hidden="true">＋</span> New chat
+      </button>
+
+      <div class="sidebar-label">YOUR WORKSPACE</div>
+      <nav class="side-nav" aria-label="Workspace">
+        <button class="nav-link active" type="button"><span>✦</span> AI Chat</button>
+        <button class="nav-link" type="button" title="Projects and Appwrite storage will be added later">
+          <span>▣</span> Projects <small>SOON</small>
+        </button>
+        <button class="nav-link" type="button" title="File analysis will be added later">
+          <span>▤</span> File analysis <small>SOON</small>
+        </button>
+        <button class="nav-link" type="button" title="Image tools will be added later">
+          <span>◈</span> Image studio <small>SOON</small>
+        </button>
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+
+      <div class="sidebar-footer">
+        <div class="status-dot"></div>
+        <span>DOJA starter workspace</span>
+      </div>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Toggle navigation">☰</button>
+        <div class="topbar-title">AI Chat <span class="beta-pill">PREVIEW</span></div>
+        <button class="theme-button" id="themeButton" type="button" aria-label="Switch color theme">
+          <span aria-hidden="true">◐</span> <span id="themeLabel">DOJA Dark</span>
+        </button>
+      </header>
+
+      <section class="conversation" id="conversation" aria-live="polite">
+        <div class="welcome" id="welcome">
+          <div class="welcome-icon">✦</div>
+          <div class="eyebrow">YOUR AI CREATIVE PARTNER</div>
+          <h1>What can we make<br>possible today?</h1>
+          <p>Ask a question, explore an idea, write something, or build your next project with DOJA.</p>
+
+          <div class="prompt-grid">
+            <button class="prompt-card" type="button" data-prompt="Explain a difficult topic in simple terms, then give me a short example.">
+              <span class="prompt-icon violet">✧</span>
+              <strong>Learn something</strong>
+              <span>Make complex ideas easier to understand.</span>
+            </button>
+            <button class="prompt-card" type="button" data-prompt="Help me research this topic. Give me a structured overview, key questions, and what I should verify.">
+              <span class="prompt-icon blue">⌕</span>
+              <strong>Research an idea</strong>
+              <span>Build an outline and find the right questions.</span>
+            </button>
+            <button class="prompt-card" type="button" data-prompt="Help me plan and build a responsive website. Start by asking what the website is for.">
+              <span class="prompt-icon pink">⌘</span>
+              <strong>Build a website</strong>
+              <span>Plan your next creative or coding project.</span>
+            </button>
+            <button class="prompt-card" type="button" data-prompt="Help me organize my ideas into a clear, practical plan.">
+              <span class="prompt-icon amber">▤</span>
+              <strong>Organize your ideas</strong>
+              <span>Turn a rough thought into clear next steps.</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="messages" id="messages"></div>
+      </section>
+
+      <section class="composer-wrap">
+        <form class="composer" id="chatForm">
+          <label class="sr-only" for="promptInput">Message DOJA AI</label>
+          <textarea id="promptInput" rows="1" maxlength="12000"
+            placeholder="Message DOJA AI…"
+            autocomplete="off"></textarea>
+          <div class="composer-bottom">
+            <span class="composer-hint">DOJA can make mistakes. Check important information.</span>
+            <button class="send-button" id="sendButton" type="submit" aria-label="Send message">
+              <span aria-hidden="true">↑</span>
+            </button>
+          </div>
+        </form>
+        <div class="composer-note">Your messages are not saved yet. Project saving and accounts will be added with Appwrite.</div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
