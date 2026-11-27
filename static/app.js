@@ -25,17 +25,6 @@ function setTheme(index) {
   localStorage.setItem("doja-theme", String(index % themes.length));
 }
 
-themeButton.addEventListener("click", () => {
-  const current = Number(localStorage.getItem("doja-theme") || "0");
-  setTheme(current + 1);
-});
-
-setTheme(Number(localStorage.getItem("doja-theme") || "0"));
-
-document.querySelector("#mobileMenu").addEventListener("click", () => {
-  sidebar.classList.toggle("open");
-});
-
 function scrollToBottom() {
   conversation.scrollTop = conversation.scrollHeight;
 }
@@ -55,7 +44,6 @@ function addMessage(role, content, options = {}) {
   body.className = "message-body";
   body.textContent = content;
   wrapper.appendChild(body);
-
   messagesElement.appendChild(wrapper);
   scrollToBottom();
   return wrapper;
@@ -65,8 +53,6 @@ function resizeInput() {
   promptInput.style.height = "auto";
   promptInput.style.height = `${Math.min(promptInput.scrollHeight, 180)}px`;
 }
-
-promptInput.addEventListener("input", resizeInput);
 
 async function sendMessage(text) {
   const prompt = text.trim();
@@ -81,21 +67,16 @@ async function sendMessage(text) {
   const typingMessage = addMessage("assistant", "DOJA is thinking…");
   typingMessage.querySelector(".message-body").classList.add("typing");
 
-  const previousHistory = history.slice(-12);
-
   try {
     const response = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt, history: previousHistory }),
+      body: JSON.stringify({ prompt, history: history.slice(-12) }),
     });
 
-    let data;
-    try {
-      data = await response.json();
-    } catch {
-      throw new Error("The server returned an invalid response. Check the server terminal.");
-    }
+    const data = await response.json().catch(() => ({
+      detail: "The server returned an invalid response.",
+    }));
 
     if (!response.ok) {
       throw new Error(data.detail || data.message || `Request failed (${response.status}).`);
@@ -121,8 +102,21 @@ async function sendMessage(text) {
   }
 }
 
+themeButton.addEventListener("click", () => {
+  const current = Number(localStorage.getItem("doja-theme") || "0");
+  setTheme(current + 1);
+});
+
+document.querySelector("#mobileMenu").addEventListener("click", () => {
+  sidebar.classList.toggle("open");
+});
+
+promptInput.addEventListener("input", resizeInput);
+
 chatForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+  event.preventEventDefault
+    ? event.preventEventDefault()
+    : event.preventDefault();
   const prompt = promptInput.value;
   if (!prompt.trim()) return;
   promptInput.value = "";
@@ -138,9 +132,7 @@ promptInput.addEventListener("keydown", (event) => {
 });
 
 document.querySelectorAll("[data-prompt]").forEach((button) => {
-  button.addEventListener("click", () => {
-    sendMessage(button.dataset.prompt);
-  });
+  button.addEventListener("click", () => sendMessage(button.dataset.prompt));
 });
 
 document.querySelector("#newChatButton").addEventListener("click", () => {
@@ -152,3 +144,5 @@ document.querySelector("#newChatButton").addEventListener("click", () => {
   sidebar.classList.remove("open");
   promptInput.focus();
 });
+
+setTheme(Number(localStorage.getItem("doja-theme") || "0"));
