@@ -8,6 +8,8 @@ const themeButton = document.querySelector("#themeButton");
 const themeLabel = document.querySelector("#themeLabel");
 const sidebar = document.querySelector("#sidebar");
 
+// `history` stores this page's conversation. `isSending` starts false so the
+// first message can be sent, then is reset to false after each request.
 let history = [];
 let isSending = false;
 
@@ -85,7 +87,6 @@ async function sendMessage(text) {
     const answer = data.response || "The AI returned an empty response.";
     typingMessage.querySelector(".message-body").textContent = answer;
     typingMessage.querySelector(".message-body").classList.remove("typing");
-
     history.push(
       { role: "user", content: prompt },
       { role: "assistant", content: answer }
@@ -114,9 +115,7 @@ document.querySelector("#mobileMenu").addEventListener("click", () => {
 promptInput.addEventListener("input", resizeInput);
 
 chatForm.addEventListener("submit", (event) => {
-  event.preventEventDefault
-    ? event.preventEventDefault()
-    : event.preventDefault();
+  event.preventDefault();
   const prompt = promptInput.value;
   if (!prompt.trim()) return;
   promptInput.value = "";
